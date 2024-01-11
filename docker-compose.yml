@@ -3,14 +3,14 @@ version: '3.8'
 services:
   scrappers:
     build:
-      context: .
+      context: ./scrappers
       dockerfile: Dockerfile
     depends_on:
       - db
     ports:
       - "5000:5000" # Port 5000 on host to port 5000 on container
     volumes:
-      - ./logs:/app/logs  # Mount logs directory for persistence
+      - ./scrappers:/app  # Mount scrappers directory for persistence
     env_file:
       - .env  # Add environment variables from file
     environment:
@@ -22,13 +22,14 @@ services:
       - DB_PASS=${DB_PASS}
       - DB_NAME=${DB_NAME}
       # Add email credentials for notifier?
+      - GMAIL_CRED=${GMAIL_CRED}
 
   db:
     image: mysql:8.0.35
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       # Mount SQL scripts for database initialization
-      - ./init_sql_scripts:/docker-entrypoint-initdb.d
+      - .db/sql/init_sql_scripts:/docker-entrypoint-initdb.d
     env_file:
       - .env  # Add environment variables from file
     ports:
@@ -36,12 +37,18 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"  # Port 6379 on host to port 6379 on container
+    
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     depends_on:
       - db
+      - redis
     ports:
       - "8000:8000" # Port 8000 on host to port 8000 on container
     volumes:
@@ -62,7 +69,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000" # Port 3000 on host to port 3000 on container
+      - "5173:5173" # Port 5173 on host to port 5173 on container
     volumes:
       - ./frontend:/app  # Mount frontend directory for persistence
     env_file:
