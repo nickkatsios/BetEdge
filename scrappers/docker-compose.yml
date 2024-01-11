@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "5000:5000" # Port 5000 on host to port 5000 on container
+    volumes:
+      - ./logs:/app/logs  # Mount logs directory for persistence
+    env_file:
+      - .env  # Add environment variables from file
+    environment:
+      # Credentials used to connect to db from db.py __init__ method
+      # Located in root .env file
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      # Add email credentials for notifier?
+
+  db:
+    image: mysql:8.0.35
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      # Mount SQL scripts for database initialization
+      - ./init_sql_scripts:/docker-entrypoint-initdb.d
+    env_file:
+      - .env  # Add environment variables from file
+    ports:
+      - "3307:3306"  # Port 3307 on host to port 3306 on container
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}   
+
+# Notes
+# ---------------------------------------------------------------------------------------------
+# 1. The db host name is 'db' because docker compose creates the same network
+# for all services in the docker-compose.yml file
+# https://docs.docker.com/compose/networking/
+# The db port is 3306 because that is the MySQL port in the container specified in the ports section
+# And since we are trying to connect the 2 containers, we use the container port
+# The db might take a while to start up, so the app might fail to connect to the db at first
+# If that happens, just restart the app container --> See README.md for more details
+# ---------------------------------------------------------------------------------------------
+# 2. The db container mounts the init_sql_scripts directory to the /docker-entrypoint-initdb.d directory
+# in the container. This is where MySQL looks for SQL scripts to run when the container starts up
+# to initialize the database. The scripts are run in alphabetical order.

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "src"
+version = "0.1.0"
+description = ""
+authors = ["nickkatsios <t8200071@aueb.gr>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+selenium = "^4.9.0"
+mysql = "^0.0.3"
+mysql-connector = "^2.2.9"
+mysqlclient = "^2.2.0"
+python-dotenv = "^1.0.0"
+webdriver-manager = "^4.0.1"
+pytest = "^7.4.3"
+schedule = "^1.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
