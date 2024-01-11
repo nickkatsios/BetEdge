@@ -66,8 +66,8 @@ jobs:
       # things like Django apps don't need this. But it's a good idea since it fully-exercises the
       # pyproject.toml and makes that if you add things like console-scripts at some point that
       # they'll be installed and working.
-      - run: poetry install --no-interaction
+      - run: cd scrappers && poetry install --no-interaction
 
       # And finally run tests. I'm using pytest and all my pytest config is in my `pyproject.toml`
       # so this line is super-simple. But it could be as complex as you need.
-      - run: poetry run pytest -m "not database"
+      - run: cd scrappers && poetry run pytest -m "not database"
