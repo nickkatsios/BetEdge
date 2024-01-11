@@ -56,7 +56,7 @@ services:
     env_file:
       - .env  # Add environment variables from file
     environment:
-      # Credentials used to connect to db from db.py __init__ method
+      # Credentials used to connect to db from settings.py
       # Located in root .env file
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
