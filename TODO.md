@@ -1,4 +1,4 @@
-# GENERAL SCRAPPER TODOS
+# Scrappers
 - Docs for urls --> done
 - fix readme for usage with poetry --> done
 - fix all prev main scrappers --> done
@@ -18,24 +18,23 @@ If none values are present in the matching and the 2 events match (by either nam
 - Better url scrapping with classes for each bookamer like main scrapping --> done
 - Add url scrapping error handling , scheduling , logging retrying etc --> scheduling done
 
+# Backend
+- change id db naming as outlined here
+https://stackoverflow.com/questions/37839867/valueerror-cannot-assign-must-be-an-instance
+- delete venv from git and add requirements.txt -> done 
+- schedule arb check (with celery? or cron?) --> done
+- arb error handling
+- add logging
+- add tests
+- add docker , to be added to main docker-compose.yml 
+- add celery result ui with django-celery-beat 
+- reasearch in django best practices for project structure
+- configure docker build to start celery worker
+- add helper arb functions in /managment/commands/
+- add tasks to celery worker to clean db from old events, markets, arb opportunities
+- check if arb already exists in db before adding it --> done
 
-# DOCKER TODOS
-- Dockerize app --> done prototype
-- Retry module to wait for db init on docker compose run --> done but not needed
-- Add db setup script to replicate db structure --> done
-- implement layer caching for faster builds on dockerfile --> done
-
-
-# INFRA TODOS
-- Set up db in raspberry pi cluster with 1 main db + scrapper and 2 scrapper only
-
-
-# BACKEND TODOS
-- revisit backend architecture
-
-
-# FRONTEND TODOS
-- Add frontend in Vue.js
+# Frontend
+- Build simple frontend in Vue.js to display arb opportunities
+- dockerize frontend
 - Add discord bots for notifs on arbitrage opportunities
-
-
