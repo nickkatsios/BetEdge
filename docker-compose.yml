@@ -6,7 +6,8 @@ services:
       context: ./scrappers
       dockerfile: Dockerfile
     depends_on:
-      - db
+      db:
+        condition: service_healthy  # Wait until the health check passes
     ports:
       - "5000:5000" # Port 5000 on host to port 5000 on container
     volumes:
@@ -16,7 +17,7 @@ services:
     environment:
       # Credentials used to connect to db from db.py __init__ method
       # Located in root .env file
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=${DB_HOST_DOCKER}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
@@ -29,36 +30,41 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       # Mount SQL scripts for database initialization
-      - .db/sql/init_sql_scripts:/docker-entrypoint-initdb.d
+      - ./db/sql/init_sql_scripts:/docker-entrypoint-initdb.d
     env_file:
       - .env  # Add environment variables from file
     ports:
       - "3307:3306"  # Port 3307 on host to port 3306 on container
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS} 
+    healthcheck:
+      test: ["CMD", "mysql", "-h", "localhost", "-u", "root", "-p${DB_PASS}", "-e", "SELECT 1"]
+      timeout: 20s
+      retries: 10
 
   redis:
     image: redis:alpine
     ports:
-      - "6379:6379"  # Port 6379 on host to port 6379 on container
+      - "6380:6379"  # Port 6380 on host to port 6379 on container
     
   backend:
+    command: sh -c "python3 manage.py migrate --noinput && python manage.py runserver"
     build:
       context: ./backend
       dockerfile: Dockerfile
-    depends_on:
-      - db
-      - redis
-    ports:
-      - "8000:8000" # Port 8000 on host to port 8000 on container
     volumes:
       - ./backend:/app  # Mount backend directory for persistence
+    depends_on:
+      db:
+        condition: service_healthy  # Wait until the health check passes
+    ports:
+      - "8000:8000" # Port 8000 on host to port 8000 on container
     env_file:
       - .env  # Add environment variables from file
     environment:
       # Credentials used to connect to db from settings.py
       # Located in root .env file
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=${DB_HOST_DOCKER}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
@@ -68,6 +74,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy  # Wait until the health check passes
     ports:
       - "5173:5173" # Port 5173 on host to port 5173 on container
     volumes:

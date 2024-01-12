@@ -32,8 +32,8 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy the Django project files to the working directory
 COPY . /backend/
 
+# Make migrations and create the database
+RUN python manage.py makemigrations
+
 # Expose the port the Django backend runs on
 EXPOSE 8000
-
-# Run the Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
