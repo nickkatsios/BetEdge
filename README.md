@@ -14,9 +14,22 @@
 # BetEdge
 An extensible dockerized full stack sports betting arbitrage application in Python.
 
+## Table of contents
+- [Overview](#overview)
+- [Components](#components)
+  - [```/scrappers```](#scrappers)
+  - [```/backend```](#backend)
+  - [```/frontend```](#frontend)
+  - [Database](#database)
+  - [Schema](#schema)
+- [Quickstart](#quickstart)
+    - [Docker](#docker)
+    - [Settin up each service individually](#settin-up-each-service-individually)
+- [Notes](#notes)
+
 ## Components
 
-### ```/scrappers```
+### ```/scrappers``` 
 A scrapping framework for collecting odds data from various bookmakers utilizing Selenium and storing them in a MySQL database. Cappable of scrapping 100s of events per minute with support for the top 4 bookmakers in Greece. Urls for events are first extracted from the bookmakers' websites and then the odds are scrapped from the extracted urls. The scrappers are designed to be extensible to support more bookmakers and markets with minimal effort.
 
 #### Features
@@ -25,6 +38,7 @@ A scrapping framework for collecting odds data from various bookmakers utilizing
 - Headless scrapping for reduced resource consumption.
 - Scheduler for scrapping events at regular intervals.
 - Logging for debugging and error handling.
+- Support for Firefox and Chrome webdrivers.
 - Email notifications for encountered errors.
 - Extensible to support more bookmakers and markets.
 - Complete documentation and guides for adding new scrappers.
@@ -73,9 +87,14 @@ A complete schema diagram can be found [here](diagrams/EER10.pdf).
 ### Docker
 The easiest way to run the project is by using docker-compose. To run the project in a docker container, run the following:
 
-1. Create a .env file in the root directory of the project with the variables defined in the ```.env.example``` file.
+1. Clone the repository:
+```bash
+git clone https://github.com/nickkatsios/BetEdge.git && cd BetEdge
+```
+2. Download and install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
+3. Create a .env file in the root directory of the project with the variables defined in the ```.env.example``` file.
 
-2. Build the docker image by running:
+4. Build the docker image by running:
 ```bash
 docker compose up --build
 ```
@@ -84,11 +103,14 @@ This will spin up containers for all components. Since all services rely on the 
 ### Settin up each service individually
 If you want to run each service individually, follow the instructions provided in the corresponding ```README```.
 The order in which the services should be initialized is the following:
-1. Database
-2. Scrappers
-3. Backend
-4. Frontend
+1. Database --> See the [Scrappers README](db/README.md)
+2. Scrappers --> See the [Scrappers README](scrappers/README.md) 
+3. Backend --> See the [Backend README](backend/README.md) 
+4. Frontend --> See the [Frontend README](frontend/README.md)
 
 ## Notes
 - The project is currently under development and is not ready for production use.
 - Bookmakers may update their websites at any time, which may break the scrappers. If you encounter any errors, you need to update the scrappers accordingly.
+
+## Contributing
+Pull requests are always welcome. For major changes, please open an issue first to discuss what you would like to change.

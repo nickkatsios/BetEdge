@@ -1,4 +1,5 @@
 # frontend
+The frontend for the BetEdge project.
 
 ## Recommended IDE Setup
 
