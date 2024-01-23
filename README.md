@@ -35,8 +35,11 @@ A Django REST API project for serving the odds and event data endpoints. Respons
 ### Backend quickstart
 For a quickstart guide on how to run the backend, see the correspondinng [README](backend/README.md)
 
-### Frontend
+### ```/frontend```
 A sample Vue.js frontend for displaying the odds and arbitrage opportunities. Currently under development, added for building purposes.
+
+### Frontend quickstart
+For a quickstart guide on how to run the frontend, see the correspondinng [README](frontend/README.md)
 
 ### Database
 A MySQL database for storing the odds, url and event data. All sql scripts for creating the schema and adding the initial data are located in the ```/db/sql``` folder.
