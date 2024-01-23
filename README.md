@@ -1,5 +1,15 @@
 ![CI](https://github.com/nickkatsios/BetEdge/actions/workflows/build_and_test_scrappers.yml/badge.svg)
 
+
+██████╗ ███████╗████████╗███████╗██████╗  ██████╗ ███████╗
+██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔════╝ ██╔════╝
+██████╔╝█████╗     ██║   █████╗  ██║  ██║██║  ███╗█████╗  
+██╔══██╗██╔══╝     ██║   ██╔══╝  ██║  ██║██║   ██║██╔══╝  
+██████╔╝███████╗   ██║   ███████╗██████╔╝╚██████╔╝███████╗
+╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═════╝  ╚═════╝ ╚══════╝
+                                                          
+                                                
+
 # BetEdge
 An extensible dockerized full stack sports betting arbitrage application in Python.
 
