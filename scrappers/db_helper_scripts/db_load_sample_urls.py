@@ -14,9 +14,9 @@ if __name__ == '__main__':
     db = Database()
     sql = "INSERT INTO Urls (bookmaker_id, url, timestamp) VALUES (%s, %s, %s)"
     data = [
-        (1, 'https://www.novibet.gr/en/sports/matches/ofi-asteras-tripolis/e33028656', datetime.datetime.now()),
-        (2, 'https://en.stoiximan.gr/match-odds/ofi-crete-asteras-tripolis/42192282/', datetime.datetime.now()),
-        (3, 'https://www.betshop.gr/sports/sportevent/stoixima-podosfairo/spain-laliga/villarreal-real-sociedad/5748674', datetime.datetime.now()),
+        (1, 'https://www.novibet.gr/en/sports/matches/pas-giannina-lamia/e33692811', datetime.datetime.now()),
+        (2, 'https://en.stoiximan.gr/match-odds/pas-giannina-lamia/44262838/', datetime.datetime.now()),
+        (3, 'https://www.betshop.gr/sports/sportevent/stoixima-podosfairo/greece-super-league/pas-giannina-lamia/5854924', datetime.datetime.now()),
         (4, 'https://www.betsson.gr/en/sportsbook/football/greece/greece-super-league-1', datetime.datetime.now()),
     ]
     for row in data:

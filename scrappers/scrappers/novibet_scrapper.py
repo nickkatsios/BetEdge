@@ -72,7 +72,7 @@ class Novibet_scrapper(Scrapper_interface):
 
     def get_event_teams(self):
         """ Returns the 2 teams of the event"""
-        teams = self.driver.find_elements(By.CLASS_NAME , "eventPresentation_eventCompetitor2")
+        teams = self.driver.find_elements(By.CLASS_NAME , "eventPresentation_eventCompetitor")
         team1 = teams[0].text
         team2 = teams[1].text
         return team1, team2

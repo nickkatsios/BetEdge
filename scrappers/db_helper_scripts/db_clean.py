@@ -18,13 +18,13 @@ if __name__ == '__main__':
     sql = "DELETE FROM Odds"
     db.execute_update(sql, data=None)
     print("----------Odds deleted----------")
-    sql = "DELETE FROM Events"
-    db.execute_update(sql, data=None)
-    print("----------Events deleted----------")
-    sql = "DELETE FROM Arbitrage_Outcomes"
-    db.execute_update(sql, data=None)
-    print("----------Arbitrage_Outcomes deleted----------")
     sql = "DELETE FROM Arbitrage"
     db.execute_update(sql, data=None)
     print("----------Arbitrage deleted----------")
+    sql = "DELETE FROM Arbitrage_Outcomes"
+    db.execute_update(sql, data=None)
+    print("----------Arbitrage_Outcomes deleted----------")
+    sql = "DELETE FROM Events"
+    db.execute_update(sql, data=None)
+    print("----------Events deleted----------")
 

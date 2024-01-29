@@ -145,15 +145,15 @@ class Scrapper_manager:
         root_logger.info(f"Novibet scrapper created with {len(novibet_urls)} urls")
         scrappers.append(novibet_scrapper)
 
-        # betshop_urls = url_loader.load_urls(bookmaker_ids["betshop"])
-        # betshop_scrapper = Betshop_scrapper(None, Sport.FOOTBALL.value , betshop_urls, betshop_allowed_markets , db, self.create_logger(Bookmaker.BETSHOP.value), notifier )
-        # root_logger.info(f"Betshop scrapper created with {len(betshop_urls)} urls")
-        # scrappers.append(betshop_scrapper)
+        betshop_urls = url_loader.load_urls(bookmaker_ids["betshop"])
+        betshop_scrapper = Betshop_scrapper(None, Sport.FOOTBALL.value , betshop_urls, betshop_allowed_markets , db, self.create_logger(Bookmaker.BETSHOP.value), notifier )
+        root_logger.info(f"Betshop scrapper created with {len(betshop_urls)} urls")
+        scrappers.append(betshop_scrapper)
 
-        # stoiximan_urls = url_loader.load_urls(bookmaker_ids["stoiximan"])
-        # stoiximan_scrapper = Stoiximan_scrapper(None, Sport.FOOTBALL.value, stoiximan_urls, stoiximan_allowed_markets , db, self.create_logger(Bookmaker.STOIXIMAN.value),  notifier)
-        # root_logger.info(f"Stoiximan scrapper created with {len(stoiximan_urls)} urls")
-        # scrappers.append(stoiximan_scrapper)
+        stoiximan_urls = url_loader.load_urls(bookmaker_ids["stoiximan"])
+        stoiximan_scrapper = Stoiximan_scrapper(None, Sport.FOOTBALL.value, stoiximan_urls, stoiximan_allowed_markets , db, self.create_logger(Bookmaker.STOIXIMAN.value),  notifier)
+        root_logger.info(f"Stoiximan scrapper created with {len(stoiximan_urls)} urls")
+        scrappers.append(stoiximan_scrapper)
         
         # betsson_urls = url_loader.load_urls(bookmaker_ids["betsson"])
         # betsson_scrapper = Betsson_scrapper(None, Sport.FOOTBALL.value, betsson_urls, betsson_allowed_markets , db, self.create_logger(Bookmaker.BETSSON.value), notifier)
