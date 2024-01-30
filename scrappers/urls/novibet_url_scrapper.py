@@ -31,7 +31,7 @@ class Novibet_url_scrapper:
             accept_cookes_btn.click()
             self.driver.implicitly_wait(1)
         except:
-            print("error closing popup")
+            self.logger.info(__class__.__name__ + " : " + "Error closing popup")
             pass
 
     def get_league_elements(self):
@@ -58,7 +58,7 @@ class Novibet_url_scrapper:
         leagues = self.get_league_elements()
         league_urls = []
         wait_sec = 1
-        for i in range(2):
+        for i in range(10):
             try:
                 leagues = self.get_league_elements()
                 league = leagues[i]
@@ -69,7 +69,7 @@ class Novibet_url_scrapper:
                 self.driver.back()
                 time.sleep(wait_sec)
             except:
-                print("error finding element")
+                self.logger.info(__class__.__name__ + " : " + "Error getting league urls")
                 continue
         return league_urls
     
@@ -86,12 +86,13 @@ class Novibet_url_scrapper:
                 event_urls.append(event.get_attribute("href"))
             # filter out live events
             event_urls = list(filter(lambda x: "live" not in x, event_urls))
-        return event_urls
+            # save to db for each league
+            self.write_urls_to_db(event_urls)
+
     
     def run_url_extractor(self):
         league_urls = self.run_league_url_extractor()
-        event_urls = self.run_event_url_extractor(league_urls)
-        self.write_urls_to_db(event_urls)
+        self.run_event_url_extractor(league_urls)
     
     def write_urls_to_db(self, urls):
         """Writes the urls to the database
@@ -103,3 +104,4 @@ class Novibet_url_scrapper:
             sql = "INSERT INTO Urls (bookmaker_id, url, timestamp) VALUES (%s, %s, NOW())"
             values = (self.bookmaker_id, url)
             self.db.execute_insert(sql, values)
+        self.logger.info(__class__.__name__ + " : " + "Inserted: " + str(len(urls)) + " urls to db")

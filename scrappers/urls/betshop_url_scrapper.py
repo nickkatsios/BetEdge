@@ -1,6 +1,7 @@
 import time
 from selenium.webdriver.support.relative_locator import locate_with
 from selenium.webdriver.common.by import By
+import traceback
 
 """
 -------Url Strategy------
@@ -25,7 +26,7 @@ class Betshop_url_scrapper:
             accept_cookies_btn.click()
             self.driver.implicitly_wait(1)
         except:
-            print("error closing popup")
+            self.logger.info(__class__.__name__ + " : " + "Error closing popup")
             pass
         
     # *----- BETSHOP LEAGUE URL SCRAPPING -----*
@@ -35,10 +36,8 @@ class Betshop_url_scrapper:
         all_a_tags = self.driver.find_elements(By.TAG_NAME , "a")
         urls = []
         for a_tag in all_a_tags:
-            class_attr = a_tag.get_attribute("class")
             url = a_tag.get_attribute("href")
-            if(class_attr == "block align-bottom text-light-500 hover:text-light-600"):
-                league_name = self.driver.find_element(locate_with(By.TAG_NAME,  "label").to_left_of(a_tag)).text
+            if url is not None and url.startswith("https://www.betshop.gr/sports/game/stoixima-podosfairo/"):
                 urls.append(url)
         return urls
     
@@ -53,7 +52,7 @@ class Betshop_url_scrapper:
     # *----- BETSHOP EVENT URL SCRAPPING -----*
 
     def get_event_elements(self):
-        panel = self.driver.find_element(By.CLASS_NAME , "groupedByDate")
+        panel = self.driver.find_elements(By.CLASS_NAME , "min-h-screen")[1]
         event_elements = panel.find_elements(By.CSS_SELECTOR , "div.truncate")
         time.sleep(1.5)
         return event_elements
@@ -80,15 +79,16 @@ class Betshop_url_scrapper:
                     self.driver.back()
                     time.sleep(wait_sec)
                 except:
-                    print("error finding element, reloading...")
-                    self.driver.get(url)
+                    self.logger.info(__class__.__name__ + " : " + "Error getting event urls")
+                    self.logger.info(__class__.__name__ + " : " + traceback.format_exc())
                     continue
-        return event_urls
-    
+            # save to db for each league
+            self.write_urls_to_db(event_urls)
+            
+            
     def run_url_extractor(self):
         league_urls = self.run_league_url_extractor()
-        event_urls = self.run_event_url_extractor(league_urls)
-        self.write_urls_to_db(event_urls)
+        self.run_event_url_extractor(league_urls)
     
     def write_urls_to_db(self, urls):
         """Writes the urls to the database
@@ -100,4 +100,5 @@ class Betshop_url_scrapper:
             sql = "INSERT INTO Urls (bookmaker_id, url, timestamp) VALUES (%s, %s, NOW())"
             values = (self.bookmaker_id, url)
             self.db.execute_insert(sql, values)
+        self.logger.info(__class__.__name__ + " : " + "Inserted: " + str(len(urls)) + " urls to db")
     

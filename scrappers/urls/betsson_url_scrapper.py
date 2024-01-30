@@ -72,3 +72,4 @@ class Betsson_url_scrapper:
             sql = "INSERT INTO Urls (bookmaker_id, url, timestamp) VALUES (%s, %s, NOW())"
             values = (self.bookmaker_id, url)
             self.db.execute_insert(sql, values)
+        self.logger.info(__class__.__name__ + " : " + "Inserted: " + str(len(urls)) + " urls to db")

@@ -133,21 +133,21 @@ class Url_scrapper_manager:
 
         # Init scrappers ordered by bookmaker id
         
-        novibet_url_scrapper = Novibet_url_scrapper(None, db, self.create_logger(Bookmaker.NOVIBET.value), notifier, bookmaker_ids['novibet'], base_urls[Bookmaker.NOVIBET.value][Sport.FOOTBALL.value])
-        root_logger.info(f"--------Novibet Url scrapper created--------")
-        scrappers.append(novibet_url_scrapper)
+        # novibet_url_scrapper = Novibet_url_scrapper(None, db, self.create_logger(Bookmaker.NOVIBET.value), notifier, bookmaker_ids['novibet'], base_urls[Bookmaker.NOVIBET.value][Sport.FOOTBALL.value])
+        # root_logger.info(f"--------Novibet Url scrapper created--------")
+        # scrappers.append(novibet_url_scrapper)
         
-        stoiximan_url_scrapper = Stoiximan_url_scrapper(None, db, self.create_logger(Bookmaker.STOIXIMAN.value), notifier, bookmaker_ids['stoiximan'], base_urls[Bookmaker.STOIXIMAN.value][Sport.FOOTBALL.value])
-        root_logger.info(f"--------Stoiximan Url scrapper created--------")
-        scrappers.append(stoiximan_url_scrapper)
+        # stoiximan_url_scrapper = Stoiximan_url_scrapper(None, db, self.create_logger(Bookmaker.STOIXIMAN.value), notifier, bookmaker_ids['stoiximan'], base_urls[Bookmaker.STOIXIMAN.value][Sport.FOOTBALL.value])
+        # root_logger.info(f"--------Stoiximan Url scrapper created--------")
+        # scrappers.append(stoiximan_url_scrapper)
         
         betshop_url_scrapper = Betshop_url_scrapper(None, db, self.create_logger(Bookmaker.BETSHOP.value), notifier, bookmaker_ids['betshop'], base_urls[Bookmaker.BETSHOP.value][Sport.FOOTBALL.value])
         root_logger.info(f"--------Betshop Url scrapper created--------")
         scrappers.append(betshop_url_scrapper)
         
-        betsson_url_scrapper = Betsson_url_scrapper(None, db, self.create_logger(Bookmaker.BETSSON.value), notifier, bookmaker_ids['betsson'], base_urls[Bookmaker.BETSSON.value][Sport.FOOTBALL.value])
-        root_logger.info(f"--------Betsson Url scrapper created--------")
-        scrappers.append(betsson_url_scrapper)
+        # betsson_url_scrapper = Betsson_url_scrapper(None, db, self.create_logger(Bookmaker.BETSSON.value), notifier, bookmaker_ids['betsson'], base_urls[Bookmaker.BETSSON.value][Sport.FOOTBALL.value])
+        # root_logger.info(f"--------Betsson Url scrapper created--------")
+        # scrappers.append(betsson_url_scrapper)
         
         # Parallel scrapping
         if self.is_parallel:
